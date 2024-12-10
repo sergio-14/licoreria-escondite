@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtro por Servicio</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <!-- Formulario de filtro -->
+        <form method="get" action="{% url 'filtro_por_servicio' %}">
+            <div class="form-group">
+                <label for="servicio">Servicio:</label>
+                <input type="text" name="servicio" id="servicio" class="form-control" value="{{ servicio }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+        </form>
+
+        <hr>
+
+        <!-- Tabla con los resultados filtrados -->
+        {% if detalles %}
+        <h3>Resultados para el servicio: {{ servicio }}</h3>
+        <table class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th>Razon</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Monto Total</th>
+                    <th>Servicio</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detalle in detalles %}
+                    <tr>
+                        <td>{{ detalle.razon }}</td>
+                        <td>{{ detalle.producto }}</td>
+                        <td>{{ detalle.cantidad }}</td>
+                        <td>{{ detalle.monto_total }}</td>
+                        <td>{{ detalle.detalle.servicio }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>No se encontraron resultados para este servicio.</p>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
